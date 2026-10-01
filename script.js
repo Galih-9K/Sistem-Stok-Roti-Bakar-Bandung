@@ -9,7 +9,7 @@ const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
-    );
+ );
 
 
 /* =========================================
@@ -41,7 +41,6 @@ function rupiah(angka) {
 /* =========================================
    AMBIL DATA SUPABASE
 ========================================= */
-
 async function ambilDataStok() {
 
     const { data, error } =
@@ -52,39 +51,52 @@ async function ambilDataStok() {
                 ascending: true
             });
 
+    console.log("DATA SUPABASE:", data);
+    console.log("JUMLAH DATA:", data ? data.length : 0);
+    console.log("ERROR SUPABASE:", error);
+
 
     if (error) {
 
         console.error(
-            "Gagal mengambil data:",
+            "Gagal mengambil stok:",
             error
         );
 
         return;
-
     }
 
 
     menu = data.filter(function(item) {
 
-        return item.tipe === "menu";
+        return String(item.tipe || "")
+            .trim()
+            .toLowerCase() === "menu";
 
     });
 
 
     extraTopping = data.filter(function(item) {
 
-        return item.tipe === "topping";
+        return String(item.tipe || "")
+            .trim()
+            .toLowerCase() === "topping";
 
     });
+
+
+    console.log("JUMLAH MENU:", menu.length);
+
+    console.log(
+        "JUMLAH TOPPING:",
+        extraTopping.length
+    );
 
 
     tampilkanMenu();
 
     tampilkanExtraTopping();
-
 }
-
 
 /* =========================================
    TAMPILKAN MENU
