@@ -1,15 +1,18 @@
 /* =========================================
    KONEKSI SUPABASE
 ========================================= */
+
 const SUPABASE_URL =
     "https://dlypehgyoijohrxshtus.supabase.co";
+
 const SUPABASE_KEY =
     "sb_publishable_dhY_gV48v71cHvNDCmFilA_2yqPCTdj";
+
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
- );
+    );
 
 
 /* =========================================
@@ -41,6 +44,7 @@ function rupiah(angka) {
 /* =========================================
    AMBIL DATA SUPABASE
 ========================================= */
+
 async function ambilDataStok() {
 
     const { data, error } =
@@ -51,9 +55,18 @@ async function ambilDataStok() {
                 ascending: true
             });
 
+
     console.log("DATA SUPABASE:", data);
-    console.log("JUMLAH DATA:", data ? data.length : 0);
-    console.log("ERROR SUPABASE:", error);
+
+    console.log(
+        "JUMLAH DATA:",
+        data ? data.length : 0
+    );
+
+    console.log(
+        "ERROR SUPABASE:",
+        error
+    );
 
 
     if (error) {
@@ -64,6 +77,7 @@ async function ambilDataStok() {
         );
 
         return;
+
     }
 
 
@@ -85,7 +99,10 @@ async function ambilDataStok() {
     });
 
 
-    console.log("JUMLAH MENU:", menu.length);
+    console.log(
+        "JUMLAH MENU:",
+        menu.length
+    );
 
     console.log(
         "JUMLAH TOPPING:",
@@ -96,7 +113,9 @@ async function ambilDataStok() {
     tampilkanMenu();
 
     tampilkanExtraTopping();
+
 }
+
 
 /* =========================================
    TAMPILKAN MENU
@@ -110,6 +129,13 @@ function tampilkanMenu() {
         );
 
 
+    if (!daftarMenu) {
+
+        return;
+
+    }
+
+
     daftarMenu.innerHTML = "";
 
 
@@ -118,7 +144,9 @@ function tampilkanMenu() {
     let jumlahHampirHabis = 0;
 
 
-    /* HITUNG TOTAL */
+    /* =====================================
+       HITUNG TOTAL
+    ===================================== */
 
     menu.forEach(function(item) {
 
@@ -168,7 +196,7 @@ function tampilkanMenu() {
 
 
             if (
-                !item.nama
+                !String(item.nama || "")
                     .toLowerCase()
                     .includes(
                         kataKunci.toLowerCase()
@@ -250,7 +278,9 @@ function tampilkanMenu() {
             `;
 
 
-            daftarMenu.appendChild(group);
+            daftarMenu.appendChild(
+                group
+            );
 
 
             let container =
@@ -269,8 +299,18 @@ function tampilkanMenu() {
                         );
 
 
+                    /* =====================
+                       IDENTITAS CARD
+                    ===================== */
+
                     card.className =
                         "menu";
+
+
+                    card.setAttribute(
+                        "data-id",
+                        item.id
+                    );
 
 
                     let rendah =
@@ -289,6 +329,10 @@ function tampilkanMenu() {
                     }
 
 
+                    /* =====================
+                       ISI CARD
+                    ===================== */
+
                     card.innerHTML = `
 
                         <h3>
@@ -306,14 +350,19 @@ function tampilkanMenu() {
                                 Stok
                             </span>
 
-                            <strong>
+                            <strong
+                                id="stok-${item.id}"
+                            >
                                 ${item.stok}
                             </strong>
 
                         </div>
 
 
-                        <p class="status">
+                        <p
+                            class="status"
+                            id="status-${item.id}"
+                        >
 
                             ${
                                 rendah
@@ -327,8 +376,10 @@ function tampilkanMenu() {
                         <div class="tombol">
 
                             <button
+                                type="button"
                                 class="kurang"
-                                onclick="kurangiStok(${item.id})">
+                                onclick="kurangiStok(${item.id})"
+                            >
 
                                 − Kurangi
 
@@ -336,8 +387,10 @@ function tampilkanMenu() {
 
 
                             <button
+                                type="button"
                                 class="tambah"
-                                onclick="tambahStok(${item.id})">
+                                onclick="tambahStok(${item.id})"
+                            >
 
                                 + Tambah
 
@@ -375,6 +428,220 @@ function tampilkanMenu() {
         "stokHabis"
     ).textContent =
         jumlahHampirHabis;
+
+}
+
+
+/* =========================================
+   UPDATE RINGKASAN
+========================================= */
+
+function updateRingkasan() {
+
+    let totalStok = 0;
+
+    let jumlahHampirHabis = 0;
+
+
+    menu.forEach(function(item) {
+
+        totalStok += Number(item.stok);
+
+
+        if (
+            Number(item.stok)
+            <= Number(item.batas_minimum)
+        ) {
+
+            jumlahHampirHabis++;
+
+        }
+
+    });
+
+
+    const totalMenuElement =
+        document.getElementById(
+            "totalMenu"
+        );
+
+
+    const totalStokElement =
+        document.getElementById(
+            "totalStok"
+        );
+
+
+    const stokHabisElement =
+        document.getElementById(
+            "stokHabis"
+        );
+
+
+    if (totalMenuElement) {
+
+        totalMenuElement.textContent =
+            menu.length;
+
+    }
+
+
+    if (totalStokElement) {
+
+        totalStokElement.textContent =
+            totalStok;
+
+    }
+
+
+    if (stokHabisElement) {
+
+        stokHabisElement.textContent =
+            jumlahHampirHabis;
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE TAMPILAN STOK MENU
+========================================= */
+
+function updateTampilanStok(
+    id,
+    stok,
+    batasMinimum
+) {
+
+    const stokElement =
+        document.getElementById(
+            `stok-${id}`
+        );
+
+
+    const statusElement =
+        document.getElementById(
+            `status-${id}`
+        );
+
+
+    const card =
+        document.querySelector(
+            `.menu[data-id="${id}"]`
+        );
+
+
+    if (
+        !stokElement ||
+        !statusElement ||
+        !card
+    ) {
+
+        return;
+
+    }
+
+
+    stokElement.textContent =
+        stok;
+
+
+    const rendah =
+        Number(stok)
+        <= Number(batasMinimum);
+
+
+    if (rendah) {
+
+        card.classList.add(
+            "merah"
+        );
+
+        statusElement.textContent =
+            "⚠ STOK HAMPIR HABIS";
+
+    } else {
+
+        card.classList.remove(
+            "merah"
+        );
+
+        statusElement.textContent =
+            "✓ STOK AMAN";
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE TAMPILAN STOK TOPPING
+========================================= */
+
+function updateTampilanToppingStok(
+    id,
+    stok,
+    batasMinimum
+) {
+
+    const stokElement =
+        document.getElementById(
+            `topping-stok-${id}`
+        );
+
+
+    const statusElement =
+        document.getElementById(
+            `topping-status-${id}`
+        );
+
+
+    const card =
+        document.querySelector(
+            `.topping-card[data-id="${id}"]`
+        );
+
+
+    if (
+        !stokElement ||
+        !statusElement ||
+        !card
+    ) {
+
+        return;
+
+    }
+
+
+    stokElement.textContent =
+        stok;
+
+
+    const rendah =
+        Number(stok)
+        <= Number(batasMinimum);
+
+
+    if (rendah) {
+
+        card.classList.add(
+            "merah"
+        );
+
+        statusElement.textContent =
+            "⚠ STOK HAMPIR HABIS";
+
+    } else {
+
+        card.classList.remove(
+            "merah"
+        );
+
+        statusElement.textContent =
+            "✓ STOK AMAN";
+
+    }
 
 }
 
@@ -429,6 +696,26 @@ async function tambahStok(id) {
 
     }
 
+
+    /* UPDATE DATA LOKAL */
+
+    item.stok =
+        stokBaru;
+
+
+    /* UPDATE TAMPILAN LANGSUNG */
+
+    updateTampilanStok(
+        id,
+        stokBaru,
+        item.batas_minimum
+    );
+
+
+    /* UPDATE RINGKASAN */
+
+    updateRingkasan();
+
 }
 
 
@@ -453,7 +740,9 @@ async function kurangiStok(id) {
     }
 
 
-    if (Number(item.stok) <= 0) {
+    if (
+        Number(item.stok) <= 0
+    ) {
 
         return;
 
@@ -489,6 +778,26 @@ async function kurangiStok(id) {
 
     }
 
+
+    /* UPDATE DATA LOKAL */
+
+    item.stok =
+        stokBaru;
+
+
+    /* UPDATE TAMPILAN LANGSUNG */
+
+    updateTampilanStok(
+        id,
+        stokBaru,
+        item.batas_minimum
+    );
+
+
+    /* UPDATE RINGKASAN */
+
+    updateRingkasan();
+
 }
 
 
@@ -501,7 +810,8 @@ function filterMenu(
     tombol
 ) {
 
-    filterAktif = filter;
+    filterAktif =
+        filter;
 
 
     document
@@ -531,9 +841,15 @@ function filterMenu(
    SEARCH
 ========================================= */
 
-document
-    .getElementById("searchInput")
-    .addEventListener(
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
         "input",
         function() {
 
@@ -544,6 +860,8 @@ document
 
         }
     );
+
+}
 
 
 /* =========================================
@@ -574,7 +892,9 @@ function tampilkanExtraTopping() {
 
             let rendah =
                 Number(item.stok)
-                <= Number(item.batas_minimum);
+                <= Number(
+                    item.batas_minimum
+                );
 
 
             let card =
@@ -583,8 +903,18 @@ function tampilkanExtraTopping() {
                 );
 
 
+            /* =========================
+               IDENTITAS TOPPING
+            ========================= */
+
             card.className =
                 "topping-card";
+
+
+            card.setAttribute(
+                "data-id",
+                item.id
+            );
 
 
             if (rendah) {
@@ -595,6 +925,10 @@ function tampilkanExtraTopping() {
 
             }
 
+
+            /* =========================
+               ISI TOPPING
+            ========================= */
 
             card.innerHTML = `
 
@@ -614,14 +948,19 @@ function tampilkanExtraTopping() {
                         Stok
                     </span>
 
-                    <strong>
+                    <strong
+                        id="topping-stok-${item.id}"
+                    >
                         ${item.stok}
                     </strong>
 
                 </div>
 
 
-                <p class="topping-status">
+                <p
+                    class="topping-status"
+                    id="topping-status-${item.id}"
+                >
 
                     ${
                         rendah
@@ -635,8 +974,10 @@ function tampilkanExtraTopping() {
                 <div class="topping-tombol">
 
                     <button
+                        type="button"
                         class="topping-kurang"
-                        onclick="kurangiTopping(${item.id})">
+                        onclick="kurangiTopping(${item.id})"
+                    >
 
                         − Kurangi
 
@@ -644,8 +985,10 @@ function tampilkanExtraTopping() {
 
 
                     <button
+                        type="button"
                         class="topping-tambah"
-                        onclick="tambahTopping(${item.id})">
+                        onclick="tambahTopping(${item.id})"
+                    >
 
                         + Tambah
 
@@ -709,9 +1052,29 @@ async function tambahTopping(id) {
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Gagal menambah stok topping:",
+            error
+        );
+
+        return;
 
     }
+
+
+    /* UPDATE DATA LOKAL */
+
+    item.stok =
+        stokBaru;
+
+
+    /* UPDATE TAMPILAN TOPPING */
+
+    updateTampilanToppingStok(
+        id,
+        stokBaru,
+        item.batas_minimum
+    );
 
 }
 
@@ -739,7 +1102,9 @@ async function kurangiTopping(id) {
     }
 
 
-    if (Number(item.stok) <= 0) {
+    if (
+        Number(item.stok) <= 0
+    ) {
 
         return;
 
@@ -766,9 +1131,29 @@ async function kurangiTopping(id) {
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Gagal mengurangi stok topping:",
+            error
+        );
+
+        return;
 
     }
+
+
+    /* UPDATE DATA LOKAL */
+
+    item.stok =
+        stokBaru;
+
+
+    /* UPDATE TAMPILAN TOPPING */
+
+    updateTampilanToppingStok(
+        id,
+        stokBaru,
+        item.batas_minimum
+    );
 
 }
 
@@ -799,9 +1184,15 @@ function tutupForm() {
    TAMBAH MENU
 ========================================= */
 
-document
-    .getElementById("formMenu")
-    .addEventListener(
+const formMenu =
+    document.getElementById(
+        "formMenu"
+    );
+
+
+if (formMenu) {
+
+    formMenu.addEventListener(
         "submit",
         async function(event) {
 
@@ -850,7 +1241,9 @@ document
 
             if (error) {
 
-                console.error(error);
+                console.error(
+                    error
+                );
 
                 alert(
                     "Menu gagal ditambahkan."
@@ -872,6 +1265,8 @@ document
 
         }
     );
+
+}
 
 
 /* =========================================
@@ -895,18 +1290,141 @@ supabaseClient
             );
 
 
-            ambilDataStok();
+            /* =================================
+               UPDATE
+            ================================= */
+
+            if (
+                payload.eventType === "UPDATE"
+            ) {
+
+                const data =
+                    payload.new;
+
+
+                const tipe =
+                    String(
+                        data.tipe || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                /* =============================
+                   UPDATE MENU
+                ============================= */
+
+                if (
+                    tipe === "menu"
+                ) {
+
+                    const item =
+                        menu.find(
+                            function(item) {
+
+                                return (
+                                    item.id ===
+                                    data.id
+                                );
+
+                            }
+                        );
+
+
+                    if (item) {
+
+                        item.stok =
+                            data.stok;
+
+
+                        item.batas_minimum =
+                            data.batas_minimum;
+
+
+                        updateTampilanStok(
+                            data.id,
+                            data.stok,
+                            data.batas_minimum
+                        );
+
+                    }
+
+                }
+
+
+                /* =============================
+                   UPDATE TOPPING
+                ============================= */
+
+                else if (
+                    tipe === "topping"
+                ) {
+
+                    const item =
+                        extraTopping.find(
+                            function(item) {
+
+                                return (
+                                    item.id ===
+                                    data.id
+                                );
+
+                            }
+                        );
+
+
+                    if (item) {
+
+                        item.stok =
+                            data.stok;
+
+
+                        item.batas_minimum =
+                            data.batas_minimum;
+
+
+                        updateTampilanToppingStok(
+                            data.id,
+                            data.stok,
+                            data.batas_minimum
+                        );
+
+                    }
+
+                }
+
+
+                /* =============================
+                   UPDATE RINGKASAN
+                ============================= */
+
+                updateRingkasan();
+
+            }
+
+
+            /* =================================
+               INSERT / DELETE
+            ================================= */
+
+            else {
+
+                ambilDataStok();
+
+            }
 
         }
     )
-    .subscribe(function(status) {
+    .subscribe(
+        function(status) {
 
-        console.log(
-            "Realtime status:",
-            status
-        );
+            console.log(
+                "Realtime status:",
+                status
+            );
 
-    });
+        }
+    );
 
 
 /* =========================================
