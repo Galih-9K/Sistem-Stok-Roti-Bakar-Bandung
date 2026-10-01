@@ -1,327 +1,142 @@
-/* =========================
-   DATA MENU
-========================= */
-
-let menu = [
-
-    /* 13K */
-
-    {
-        nama: "Melon + Melon",
-        harga: 13000,
-        stok: 10
-    },
-
-    {
-        nama: "Anggur + Anggur",
-        harga: 13000,
-        stok: 8
-    },
-
-    {
-        nama: "Nanas + Nanas",
-        harga: 13000,
-        stok: 12
-    },
-
-    {
-        nama: "Strowberry + Strowberry",
-        harga: 13000,
-        stok: 4
-    },
-
-    {
-        nama: "Anggur + Stowberry",
-        harga: 13000,
-        stok: 7
-    },
-
-    {
-        nama: "Strowberry + Melon",
-        harga: 13000,
-        stok: 10
-    },
-
-    {
-        nama: "Strowberry + Nanas",
-        harga: 13000,
-        stok: 6
-    },
+/* =========================================
+   KONEKSI SUPABASE
+========================================= */
+const SUPABASE_URL =
+    "https://dlypehgyoijohrxshtus.supabase.co";
+const SUPABASE_KEY =
+    "sb_publishable_dhY_gV48v71cHvNDCmFilA_2yqPCTdj";
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-    /* 15K */
+/* =========================================
+   DATA
+========================================= */
 
-    {
-        nama: "Coklat + Coklat",
-        harga: 15000,
-        stok: 10
-    },
+let menu = [];
 
-    {
-        nama: "Coklat + Melon",
-        harga: 15000,
-        stok: 8
-    },
-
-    {
-        nama: "Coklat + Nanas",
-        harga: 15000,
-        stok: 5
-    },
-
-    {
-        nama: "Coklat + Strowberry",
-        harga: 15000,
-        stok: 9
-    },
-
-    {
-        nama: "Coklat + Kacang",
-        harga: 15000,
-        stok: 7
-    },
-
-    {
-        nama: "Coklat + Anggur",
-        harga: 15000,
-        stok: 3
-    },
-
-
-    /* 16K */
-
-    {
-        nama: "Coklat + Durian",
-        harga: 16000,
-        stok: 8
-    },
-
-    {
-        nama: "Coklat + Greentea",
-        harga: 16000,
-        stok: 6
-    },
-
-    {
-        nama: "Coklat + Pisang",
-        harga: 16000,
-        stok: 10
-    },
-
-    {
-        nama: "Coklat + Vanilla",
-        harga: 16000,
-        stok: 4
-    },
-
-
-    /* 17K */
-
-    {
-        nama: "Keju + Coklat",
-        harga: 17000,
-        stok: 12
-    },
-
-    {
-        nama: "Keju + Nanas",
-        harga: 17000,
-        stok: 8
-    },
-
-    {
-        nama: "Keju + Melon",
-        harga: 17000,
-        stok: 7
-    },
-
-    {
-        nama: "Keju + Anggur",
-        harga: 17000,
-        stok: 9
-    },
-
-    {
-        nama: "Keju + Strowberry",
-        harga: 17000,
-        stok: 5
-    },
-
-    {
-        nama: "Keju + Vanilla",
-        harga: 17000,
-        stok: 6
-    },
-
-
-    /* 18K */
-
-    {
-        nama: "Keju + Durian",
-        harga: 18000,
-        stok: 4
-    },
-
-    {
-        nama: "Keju + Kacang",
-        harga: 18000,
-        stok: 8
-    },
-
-    {
-        nama: "Keju + Pisang",
-        harga: 18000,
-        stok: 10
-    },
-
-
-    /* 20K */
-
-    {
-        nama: "Keju + Greentea",
-        harga: 20000,
-        stok: 6
-    },
-
-    {
-        nama: "Keju + Keju",
-        harga: 20000,
-        stok: 5
-    },
-
-    {
-        nama: "Keju + Anggur + Coklat",
-        harga: 20000,
-        stok: 7
-    },
-
-    {
-        nama: "Keju + Kacang + Coklat",
-        harga: 20000,
-        stok: 4
-    },
-
-    {
-        nama: "Durian + Durian",
-        harga: 20000,
-        stok: 8
-    },
-
-    {
-        nama: "Keju + Strowberry + Coklat",
-        harga: 20000,
-        stok: 3
-    },
-
-
-    /* 22K */
-
-    {
-        nama: "Keju + Coklat + Durian",
-        harga: 22000,
-        stok: 6
-    },
-
-
-    /* 24K */
-
-    {
-        nama: "Keju + Pisang + Durian + Coklat",
-        harga: 24000,
-        stok: 10
-    }
-
-];
-
-
-/* =========================
-   PENGATURAN
-========================= */
+let extraTopping = [];
 
 let batasStok = 5;
-
-/* =========================
-   DATA EXTRA TOPPING
-========================= */
-
-let extraTopping = [
-
-    {
-        nama: "Keju",
-        harga: 4000,
-        stok: 8
-    },
-
-    {
-        nama: "Coklat",
-        harga: 4000,
-        stok: 4
-    },
-
-    {
-        nama: "Greentea",
-        harga: 4000,
-        stok: 6
-    }
-
-];
 
 let filterAktif = "Semua";
 
 let kataKunci = "";
 
 
-/* =========================
+/* =========================================
    FORMAT RUPIAH
-========================= */
+========================================= */
 
 function rupiah(angka) {
 
-    return angka.toLocaleString("id-ID");
+    return Number(angka).toLocaleString("id-ID");
 
 }
 
-/* =========================
+
+/* =========================================
+   AMBIL DATA SUPABASE
+========================================= */
+
+async function ambilDataStok() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("stok")
+            .select("*")
+            .order("harga", {
+                ascending: true
+            });
+
+
+    if (error) {
+
+        console.error(
+            "Gagal mengambil data:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    menu = data.filter(function(item) {
+
+        return item.tipe === "menu";
+
+    });
+
+
+    extraTopping = data.filter(function(item) {
+
+        return item.tipe === "topping";
+
+    });
+
+
+    tampilkanMenu();
+
+    tampilkanExtraTopping();
+
+}
+
+
+/* =========================================
    TAMPILKAN MENU
-========================= */
+========================================= */
 
 function tampilkanMenu() {
 
     const daftarMenu =
-        document.getElementById("daftarMenu");
+        document.getElementById(
+            "daftarMenu"
+        );
+
 
     daftarMenu.innerHTML = "";
 
 
     let totalStok = 0;
 
-    let stokRendah = 0;
+    let jumlahHampirHabis = 0;
+
 
     /* HITUNG TOTAL */
 
     menu.forEach(function(item) {
 
-        totalStok += item.stok;
+        totalStok += Number(item.stok);
 
-        if (item.stok <= batasStok) {
 
-            stokRendah++;
+        if (
+            Number(item.stok)
+            <= Number(item.batas_minimum)
+        ) {
+
+            jumlahHampirHabis++;
 
         }
 
     });
 
 
-    /* FILTER MENU */
+    /* =====================================
+       FILTER
+    ===================================== */
 
-    let menuTampil =
-        menu.filter(function(item) {
+    let menuTampil = menu.filter(
+        function(item) {
 
-            /* FILTER STOK */
 
             if (
                 filterAktif === "Aman" &&
-                item.stok <= batasStok
+                Number(item.stok)
+                <= Number(item.batas_minimum)
             ) {
 
                 return false;
@@ -331,15 +146,14 @@ function tampilkanMenu() {
 
             if (
                 filterAktif === "Rendah" &&
-                item.stok > batasStok
+                Number(item.stok)
+                > Number(item.batas_minimum)
             ) {
 
                 return false;
 
             }
 
-
-            /* FILTER SEARCH */
 
             if (
                 !item.nama
@@ -356,12 +170,13 @@ function tampilkanMenu() {
 
             return true;
 
-        });
+        }
+    );
 
 
-    /* =========================
+    /* =====================================
        KELOMPOKKAN BERDASARKAN HARGA
-    ========================== */
+    ===================================== */
 
     let kelompokHarga = {};
 
@@ -374,14 +189,16 @@ function tampilkanMenu() {
 
         }
 
-        kelompokHarga[item.harga].push(item);
+
+        kelompokHarga[item.harga]
+            .push(item);
 
     });
 
 
-    /* =========================
-       TAMPILKAN GROUP
-    ========================== */
+    /* =====================================
+       TAMPILKAN KELOMPOK HARGA
+    ===================================== */
 
     Object.keys(kelompokHarga)
 
@@ -395,25 +212,30 @@ function tampilkanMenu() {
 
 
             let group =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
-            group.className = "price-group";
 
-         group.innerHTML = `
+            group.className =
+                "price-group";
 
-    <div class="price-title">
 
-        <div class="price-badge">
-            Rp ${rupiah(Number(harga))}
-        </div>
+            group.innerHTML = `
 
-     <div class="price-line"></div>
+                <div class="price-title">
 
-    </div>
+                    <div class="price-badge">
+                        Rp ${rupiah(harga)}
+                    </div>
 
-    <div class="menu-container"></div>
+                    <div class="price-line"></div>
 
-`;
+                </div>
+
+                <div class="menu-container"></div>
+
+            `;
 
 
             daftarMenu.appendChild(group);
@@ -425,28 +247,32 @@ function tampilkanMenu() {
                 );
 
 
-            kelompokHarga[harga].forEach(
-                function(item) {
-
-
-                    let index =
-                        menu.indexOf(item);
+            kelompokHarga[harga]
+                .forEach(function(item) {
 
 
                     let card =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
 
 
-                    card.className = "menu";
+                    card.className =
+                        "menu";
 
 
                     let rendah =
-                        item.stok <= batasStok;
+                        Number(item.stok)
+                        <= Number(
+                            item.batas_minimum
+                        );
 
 
                     if (rendah) {
 
-                        card.classList.add("merah");
+                        card.classList.add(
+                            "merah"
+                        );
 
                     }
 
@@ -490,7 +316,7 @@ function tampilkanMenu() {
 
                             <button
                                 class="kurang"
-                                onclick="kurangiStok(${index})">
+                                onclick="kurangiStok(${item.id})">
 
                                 − Kurangi
 
@@ -499,108 +325,189 @@ function tampilkanMenu() {
 
                             <button
                                 class="tambah"
-                                onclick="tambahStok(${index})">
+                                onclick="tambahStok(${item.id})">
 
                                 + Tambah
 
                             </button>
 
-                        </div> `;
+                        </div>
+
+                    `;
 
 
-                    container.appendChild(card);
+                    container.appendChild(
+                        card
+                    );
 
-                }
-
-            );
+                });
 
         });
 
 
-    /* JIKA TIDAK ADA MENU */
-
-    if (menuTampil.length === 0) {
-
-        daftarMenu.innerHTML = `
-
-            <div class="tidak-ada">
-
-                Menu tidak ditemukan.
-
-            </div>
-
-        `;
-
-    }
-
-
-    /* =========================
+    /* =====================================
        UPDATE RINGKASAN
-    ========================== */
+    ===================================== */
 
-    document.getElementById("totalMenu")
-        .textContent = menu.length;
-
-
-    document.getElementById("totalStok")
-        .textContent = totalStok;
+    document.getElementById(
+        "totalMenu"
+    ).textContent = menu.length;
 
 
-    document.getElementById("stokHabis")
-        .textContent = stokRendah;
+    document.getElementById(
+        "totalStok"
+    ).textContent = totalStok;
 
-}
 
-
-/* =========================
-   TAMBAH STOK
-========================= */
-function tambahStok(index) {
-
-    menu[index].stok++;
-
-    simpanData();
-
-    tampilkanMenu();
+    document.getElementById(
+        "stokHabis"
+    ).textContent =
+        jumlahHampirHabis;
 
 }
 
-/* =========================
-   KURANGI STOK
-========================= */
-function kurangiStok(index) {
 
-    if (menu[index].stok > 0) {
+/* =========================================
+   TAMBAH STOK MENU
+========================================= */
 
-        menu[index].stok--;
+async function tambahStok(id) {
+
+    const item =
+        menu.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!item) {
+
+        return;
 
     }
 
-    simpanData();
 
-    tampilkanMenu();
+    const stokBaru =
+        Number(item.stok) + 1;
+
+
+    const { error } =
+        await supabaseClient
+            .from("stok")
+            .update({
+
+                stok: stokBaru,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            "Gagal menambah stok:",
+            error
+        );
+
+        return;
+
+    }
 
 }
 
-/* =========================
-   FILTER
-========================= */
 
-function filterMenu(filter, tombol) {
+/* =========================================
+   KURANGI STOK MENU
+========================================= */
+
+async function kurangiStok(id) {
+
+    const item =
+        menu.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    if (Number(item.stok) <= 0) {
+
+        return;
+
+    }
+
+
+    const stokBaru =
+        Number(item.stok) - 1;
+
+
+    const { error } =
+        await supabaseClient
+            .from("stok")
+            .update({
+
+                stok: stokBaru,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            "Gagal mengurangi stok:",
+            error
+        );
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+function filterMenu(
+    filter,
+    tombol
+) {
 
     filterAktif = filter;
 
 
     document
-        .querySelectorAll(".kategori-btn")
+        .querySelectorAll(
+            ".kategori-btn"
+        )
         .forEach(function(button) {
 
-            button.classList.remove("aktif");
+            button.classList.remove(
+                "aktif"
+            );
 
         });
 
 
-    tombol.classList.add("aktif");
+    tombol.classList.add(
+        "aktif"
+    );
 
 
     tampilkanMenu();
@@ -608,24 +515,255 @@ function filterMenu(filter, tombol) {
 }
 
 
-/* =========================
+/* =========================================
    SEARCH
-========================= */
+========================================= */
 
 document
     .getElementById("searchInput")
-    .addEventListener("input", function() {
+    .addEventListener(
+        "input",
+        function() {
 
-        kataKunci = this.value;
+            kataKunci =
+                this.value;
 
-        tampilkanMenu();
+            tampilkanMenu();
 
-    });
+        }
+    );
 
 
-/* =========================
-   MODAL
-========================= */
+/* =========================================
+   EXTRA TOPPING
+========================================= */
+
+function tampilkanExtraTopping() {
+
+    const container =
+        document.getElementById(
+            "extraToppingList"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    extraTopping.forEach(
+        function(item) {
+
+
+            let rendah =
+                Number(item.stok)
+                <= Number(item.batas_minimum);
+
+
+            let card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "topping-card";
+
+
+            if (rendah) {
+
+                card.classList.add(
+                    "merah"
+                );
+
+            }
+
+
+            card.innerHTML = `
+
+                <p class="topping-nama">
+                    ${item.nama}
+                </p>
+
+
+                <p class="topping-harga">
+                    Rp ${rupiah(item.harga)}
+                </p>
+
+
+                <div class="topping-stok">
+
+                    <span>
+                        Stok
+                    </span>
+
+                    <strong>
+                        ${item.stok}
+                    </strong>
+
+                </div>
+
+
+                <p class="topping-status">
+
+                    ${
+                        rendah
+                        ? "⚠ STOK HAMPIR HABIS"
+                        : "✓ STOK AMAN"
+                    }
+
+                </p>
+
+
+                <div class="topping-tombol">
+
+                    <button
+                        class="topping-kurang"
+                        onclick="kurangiTopping(${item.id})">
+
+                        − Kurangi
+
+                    </button>
+
+
+                    <button
+                        class="topping-tambah"
+                        onclick="tambahTopping(${item.id})">
+
+                        + Tambah
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   TAMBAH STOK TOPPING
+========================================= */
+
+async function tambahTopping(id) {
+
+    const item =
+        extraTopping.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const stokBaru =
+        Number(item.stok) + 1;
+
+
+    const { error } =
+        await supabaseClient
+            .from("stok")
+            .update({
+
+                stok: stokBaru,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================
+   KURANGI STOK TOPPING
+========================================= */
+
+async function kurangiTopping(id) {
+
+    const item =
+        extraTopping.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    if (Number(item.stok) <= 0) {
+
+        return;
+
+    }
+
+
+    const stokBaru =
+        Number(item.stok) - 1;
+
+
+    const { error } =
+        await supabaseClient
+            .from("stok")
+            .update({
+
+                stok: stokBaru,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================
+   BUKA / TUTUP FORM
+========================================= */
 
 function bukaForm() {
 
@@ -645,58 +783,76 @@ function tutupForm() {
 }
 
 
-/* =========================
-   TAMBAH MENU BARU
-========================= */
+/* =========================================
+   TAMBAH MENU
+========================================= */
 
 document
     .getElementById("formMenu")
     .addEventListener(
         "submit",
-        function(event) {
+        async function(event) {
 
             event.preventDefault();
 
 
-            let nama =
-                document
-                    .getElementById("namaMenu")
-                    .value;
+            const nama =
+                document.getElementById(
+                    "namaMenu"
+                ).value;
 
 
-            let harga =
+            const harga =
                 Number(
-                    document
-                        .getElementById("hargaMenu")
-                        .value
+                    document.getElementById(
+                        "hargaMenu"
+                    ).value
                 );
 
 
-            let stok =
+            const stok =
                 Number(
-                    document
-                        .getElementById("stokMenu")
-                        .value
+                    document.getElementById(
+                        "stokMenu"
+                    ).value
                 );
 
 
-            menu.push({
+            const { error } =
+                await supabaseClient
+                    .from("stok")
+                    .insert({
 
-                nama: nama,
+                        nama: nama,
 
-                harga: harga,
+                        harga: harga,
 
-                stok: stok
+                        stok: stok,
 
-            });
+                        batas_minimum: 5,
 
-            simpanData();
+                        tipe: "menu"
 
-            tampilkanMenu();
+                    });
+
+
+            if (error) {
+
+                console.error(error);
+
+                alert(
+                    "Menu gagal ditambahkan."
+                );
+
+                return;
+
+            }
 
 
             document
-                .getElementById("formMenu")
+                .getElementById(
+                    "formMenu"
+                )
                 .reset();
 
 
@@ -705,183 +861,44 @@ document
         }
     );
 
-/* =========================
-   TAMPILKAN EXTRA TOPPING
-========================= */
 
-function tampilkanExtraTopping() {
+/* =========================================
+   REAL-TIME
+========================================= */
 
-    const container =
-        document.getElementById("extraToppingList");
+supabaseClient
+    .channel("stok-realtime")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "stok"
+        },
+        function(payload) {
 
-    container.innerHTML = "";
-
-
-    extraTopping.forEach(function(item, index) {
-
-        let rendah =
-            item.stok <= batasStok;
-
-
-        let card =
-            document.createElement("div");
-
-
-        card.className = "topping-card";
+            console.log(
+                "Perubahan realtime:",
+                payload
+            );
 
 
-        if (rendah) {
-
-            card.classList.add("merah");
+            ambilDataStok();
 
         }
+    )
+    .subscribe(function(status) {
 
-
-        card.innerHTML = `
-
-            <p class="topping-nama">
-                ${item.nama}
-            </p>
-
-
-            <p class="topping-harga">
-                Rp ${item.harga.toLocaleString("id-ID")}
-            </p>
-
-
-            <div class="topping-stok">
-
-                <span>
-                    Stok
-                </span>
-
-                <strong>
-                    ${item.stok}
-                </strong>
-
-            </div>
-
-
-            <p class="topping-status">
-
-                ${
-                    rendah
-                    ? "⚠ STOK HAMPIR HABIS"
-                    : "✓ STOK AMAN"
-                }
-
-            </p>
-
-
-            <div class="topping-tombol">
-
-                <button
-                    class="topping-kurang"
-                    onclick="kurangiTopping(${index})">
-
-                    − Kurangi
-
-                </button>
-
-
-                <button
-                    class="topping-tambah"
-                    onclick="tambahTopping(${index})">
-
-                    + Tambah
-
-                </button>
-
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
+        console.log(
+            "Realtime status:",
+            status
+        );
 
     });
 
-}
 
-/* =========================
-   TAMBAH STOK TOPPING
-========================= */
-function tambahTopping(index) {
-
-    extraTopping[index].stok++;
-
-    simpanData();
-
-    tampilkanExtraTopping();
-
-}
-
-
-/* =========================
-   KURANGI STOK TOPPING
-========================= */
-function kurangiTopping(index) {
-
-    if (extraTopping[index].stok > 0) {
-
-        extraTopping[index].stok--;
-
-    }
-
-    simpanData();
-
-    tampilkanExtraTopping();
-
-}
-/* =========================
-   SIMPAN DATA
-========================= */
-
-function simpanData() {
-
-    localStorage.setItem(
-        "dataMenu",
-        JSON.stringify(menu)
-    );
-
-    localStorage.setItem(
-        "dataExtraTopping",
-        JSON.stringify(extraTopping)
-    );
-}
-
-/* =========================
-   AMBIL DATA
-========================= */
-function ambilData() {
-
-    let dataMenu =
-        localStorage.getItem("dataMenu");
-
-    let dataExtraTopping =
-        localStorage.getItem("dataExtraTopping");
-
-
-    if (dataMenu) {
-
-        menu = JSON.parse(dataMenu);
-
-    }
-
-
-    if (dataExtraTopping) {
-
-        extraTopping =
-            JSON.parse(dataExtraTopping);
-
-    }
-
-}
-
-/* =========================
+/* =========================================
    JALANKAN
-========================= */
+========================================= */
 
-ambilData();
-tampilkanMenu();
-tampilkanExtraTopping();
+ambilDataStok();
