@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Roti Bakar Bandung - Sistem Stok</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Roti Bakar Bandung
+        </div>
+
+        <div class="nav-menu">
+            <a href="#deskripsi">Deskripsi</a>
+            <a href="#stok">Stok</a>
+            <a href="#menu">Menu</a>
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         DESKRIPSI USAHA
+    ========================== -->
+
+    <section class="intro" id="deskripsi">
+
+        <div class="intro-content">
+
+            <p class="label">
+                DESKRIPSI USAHA
+            </p>
+
+            <h1>
+                Roti Bakar Bandung
+            </h1>
+
+            <h2>
+                Roti Bakar Khas Bandung adalah usaha kuliner skala kecil menengah yang bergerak dibidang makanan ringan siap saji, beroperasi dengan sistem stand (gerai) dan telah memiliki lebih dari satu cabang yang berdiri sejak tahun 2014. Usaha ini menjual roti bakar dengan berbagai varian rasa, di mana varian original menjadi yang paling diminati pelanggan, sementara varian pandan cenderung kurang dipilih karena rasanya dinilai terlalu manis, meskipun pada akhirnya tingkat peminatan tetap bergantung pada selera masing-masing pelanggan.
+            </h2>
+
+            </div>
+
+        </div>
+
+</section>
+
+<main>
+
+        <!-- =========================
+             MONITORING STOK
+        ========================== -->
+
+        <section
+            class="stok-section"
+            id="stok">
+
+            <div class="section-header">
+
+                <p class="subjudul">
+                    INVENTORI
+                </p>
+
+                <h2>
+                    Monitoring Stok
+                </h2>
+
+                <p class="section-description">
+                    Pantau ketersediaan seluruh menu secara langsung.
+                </p>
+
+            </div>
+
+
+            <!-- RINGKASAN -->
+
+            <section class="ringkasan">
+
+                <div class="box">
+
+                    <div class="icon">
+                        🍞
+                    </div>
+
+                    <div>
+
+                        <p class="judul-box">
+                            Total Menu
+                        </p>
+
+                        <p id="totalMenu">
+                            0
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="box">
+
+                    <div class="icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <p class="judul-box">
+                            Total Stok
+                        </p>
+
+                        <p id="totalStok">
+                            0
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="box peringatan">
+
+                    <div class="icon">
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <p class="judul-box">
+                            Stok Hampir Habis
+                        </p>
+
+                        <p id="stokHabis">
+                            0
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 MENU
+            ========================== -->
+
+            <section
+                class="bagian-menu"
+                id="menu">
+
+                <div class="menu-header">
+
+                    <div>
+
+                        <p class="subjudul">
+                            DAFTAR MENU
+                        </p>
+
+                        <h2>
+                            Menu Roti Bakar
+                        </h2>
+
+                    </div>
+
+
+                    <div class="kanan-header">
+
+                        <div class="search-box">
+
+                            <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Cari menu..."
+                            >
+
+                            <span>
+                                🔍
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="btn-tambah"
+                            onclick="bukaForm()">
+
+                            + Tambah Menu
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILTER -->
+
+                <div class="kategori">
+
+                    <button
+                        class="kategori-btn aktif"
+                        onclick="filterMenu('Semua', this)">
+
+                        Semua
+
+                    </button>
+
+
+                    <button
+                        class="kategori-btn"
+                        onclick="filterMenu('Aman', this)">
+
+                        Stok Aman
+
+                    </button>
+
+
+                    <button
+                        class="kategori-btn"
+                        onclick="filterMenu('Rendah', this)">
+
+                        Hampir Habis
+
+                    </button>
+
+                </div>
+
+
+                <!-- DAFTAR MENU -->
+
+                <section id="daftarMenu">
+                </section>
+
+
+                <!-- EXTRA TOPPING -->
+
+                <section class="extra-topping">
+
+    <div class="extra-header">
+
+        <p class="subjudul">
+            TAMBAHAN
+        </p>
+
+        <h2>
+            Extra Topping
+        </h2>
+
+        <p class="section-description">
+            Pantau stok topping tambahan yang tersedia.
+        </p>
+
+    </div>
+
+
+    <div
+        id="extraToppingList"
+        class="topping-container">
+    </div>
+
+     </section>
+
+    </section>
+
+</section>
+
+</main>
+
+
+    <!-- =========================
+         MODAL TAMBAH MENU
+    ========================== -->
+
+    <div
+        id="modal"
+        class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>
+                    Tambah Menu
+                </h2>
+
+                <button
+                    class="btn-close"
+                    onclick="tutupForm()">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form id="formMenu">
+
+                <label>
+                    Nama Menu
+                </label>
+
+                <input
+                    type="text"
+                    id="namaMenu"
+                    placeholder="Contoh: Coklat + Keju"
+                    required
+                >
+
+
+                <label>
+                    Harga
+                </label>
+
+                <input
+                    type="number"
+                    id="hargaMenu"
+                    placeholder="Contoh: 15000"
+                    min="0"
+                    required
+                >
+
+
+                <label>
+                    Stok Awal
+                </label>
+
+                <input
+                    type="number"
+                    id="stokMenu"
+                    placeholder="Contoh: 10"
+                    min="0"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="btn-simpan">
+
+                    Simpan Menu
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <h3>
+            Roti Bakar Bandung
+        </h3>
+
+        <p>
+            Sistem informasi menu dan stok usaha
+        </p>
+
+        <p class="copyright">
+            © 2026 Semua Hak Dilindungi
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
