@@ -555,10 +555,11 @@ function tampilkanMenu() {
 /* =========================
    TAMBAH STOK
 ========================= */
-
 function tambahStok(index) {
 
     menu[index].stok++;
+
+    simpanData();
 
     tampilkanMenu();
 
@@ -567,7 +568,6 @@ function tambahStok(index) {
 /* =========================
    KURANGI STOK
 ========================= */
-
 function kurangiStok(index) {
 
     if (menu[index].stok > 0) {
@@ -575,6 +575,8 @@ function kurangiStok(index) {
         menu[index].stok--;
 
     }
+
+    simpanData();
 
     tampilkanMenu();
 
@@ -688,6 +690,7 @@ document
 
             });
 
+            simpanData();
 
             tampilkanMenu();
 
@@ -803,21 +806,20 @@ function tampilkanExtraTopping() {
 /* =========================
    TAMBAH STOK TOPPING
 ========================= */
-
 function tambahTopping(index) {
 
     extraTopping[index].stok++;
+
+    simpanData();
 
     tampilkanExtraTopping();
 
 }
 
 
-
 /* =========================
    KURANGI STOK TOPPING
 ========================= */
-
 function kurangiTopping(index) {
 
     if (extraTopping[index].stok > 0) {
@@ -826,12 +828,60 @@ function kurangiTopping(index) {
 
     }
 
+    simpanData();
+
     tampilkanExtraTopping();
 
 }
 /* =========================
+   SIMPAN DATA
+========================= */
+
+function simpanData() {
+
+    localStorage.setItem(
+        "dataMenu",
+        JSON.stringify(menu)
+    );
+
+    localStorage.setItem(
+        "dataExtraTopping",
+        JSON.stringify(extraTopping)
+    );
+}
+
+/* =========================
+   AMBIL DATA
+========================= */
+function ambilData() {
+
+    let dataMenu =
+        localStorage.getItem("dataMenu");
+
+    let dataExtraTopping =
+        localStorage.getItem("dataExtraTopping");
+
+
+    if (dataMenu) {
+
+        menu = JSON.parse(dataMenu);
+
+    }
+
+
+    if (dataExtraTopping) {
+
+        extraTopping =
+            JSON.parse(dataExtraTopping);
+
+    }
+
+}
+
+/* =========================
    JALANKAN
 ========================= */
 
+ambilData();
 tampilkanMenu();
 tampilkanExtraTopping();
